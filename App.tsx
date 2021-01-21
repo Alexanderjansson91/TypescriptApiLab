@@ -29,7 +29,6 @@ type ProductsScreenProps = {
 //The screen their all my products are added
 const ProductListScreen = ({ navigation }: FlatListScreenProps) => {
   const [userData, setUserData] = useState<Product[]>([]);
-  console.clear();
   console.log('response', userData);
 
   //Api Call by using "axios"
@@ -48,14 +47,14 @@ const ProductListScreen = ({ navigation }: FlatListScreenProps) => {
         data={userData}
         renderItem={({ item }) => (
           <TouchableOpacity
-          onPress= {() => {
+            onPress={() => {
               setUserData(userData)
               console.log(item.title);
             }}>
             <ItemCard
               item={item}
               navigation={navigation}
-            />      
+            />
           </TouchableOpacity>
         )}
       />
@@ -68,18 +67,20 @@ const ProductScreen = ({ route }: ProductsScreenProps) => {
   return (
     <View style={styles.containerProductInfo}>
       <Image style={styles.imageViewProductInfo} source={{ uri: route.params.image }} />
-      <Text style= {styles.headlineProductInfo}>{route.params.title}</Text>
-      <Text style={{...styles.priceProductInfo,
-                ...DiscountColor(route.params.price) ? styles.textTrue : styles.textFalse}}>{DiscountPrice(route.params.price).toFixed(2)} €</Text>
+      <Text style={styles.headlineProductInfo}>{route.params.title}</Text>
+      <Text style={{
+        ...styles.priceProductInfo,
+        ...DiscountColor(route.params.price) ? styles.textTrue : styles.textFalse
+      }}>{DiscountPrice(route.params.price).toFixed(2)} €</Text>
       <Text style={styles.headlineProductInfo}>Description</Text>
       <Text style={styles.descriptionProductInfo}>{route.params.description}</Text>
       <Text style={styles.categoryProductInfo}>Category: {route.params.category}</Text>
       <TouchableOpacity
-          onPress= {() => {
-              console.log("item is added");
-            }}>
-          <Text style= {styles.addToCartButton}>Add to cart</Text>
-          </TouchableOpacity>
+        onPress={() => {
+          console.log("item is added");
+        }}>
+        <Text style={styles.addToCartButton}>Add to cart</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -109,32 +110,21 @@ export default function App() {
 
 
 //Select color for discount product if the price is over 50 €
-function DiscountColor(productPrice: number ): boolean {
+function DiscountColor(productPrice: number): boolean {
   if (productPrice > 50) {
-    return false 
-  } 
+    return false
+  }
   else {
     return true
   }
 }
-
-//Select color for discount product if the price is over 50 €
-function discountColordd(productPrice: number, color: String ) {
-  if (productPrice > 50) {
-      color='green'
-  } 
-  else {
-    return true
-  }
-}
-
 
 //Count price for discount product if the price is over 50 €
-function DiscountPrice(productPrice: number ): number {
- if (productPrice > 50) {
+function DiscountPrice(productPrice: number): number {
+  if (productPrice > 50) {
     productPrice /= 1.25
-    return productPrice 
-  } 
+    return productPrice
+  }
   else {
     return productPrice
   }
@@ -152,23 +142,24 @@ const ItemCard = ({ item, navigation }: listItemProps) => {
         image: item.image,
         category: item.category,
         description: item.description,
-        price:item.price
+        price: item.price
       })} >
-     
+
       <View style={styles.mainViewCard}>
         <View style={styles.cardContainer}>
           <Image style={styles.imageViewCard} source={{ uri: item.image }} />
           <View>
-          <Text style={styles.textCard}>{item.title}</Text>
-          <Text style={{...styles.textCard,
-                ...DiscountColor(item.price) ? styles.textTrue : styles.textFalse}}>
-                {DiscountPrice(item.price).toFixed(2)} €
+            <Text style={styles.textCard}>{item.title}</Text>
+            <Text style={{
+              ...styles.textCard,
+              ...DiscountColor(item.price) ? styles.textTrue : styles.textFalse
+            }}>
+              {DiscountPrice(item.price).toFixed(2)} €
             </Text>
-            
-        </View>
+          </View>
         </View>
       </View>
-      
+
     </TouchableOpacity>
 
   );
@@ -185,16 +176,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textTrue: {
-    color:'black'
+    color: 'black'
   },
-  textFalse:  {
-    color:'green'
+  textFalse: {
+    color: 'green'
   },
   cardContainer: {
-    padding: 20,  
+    padding: 20,
     borderRadius: 10,
     flexDirection: 'row',
-   
+
   },
   mainViewCard: {
     padding: 10,
@@ -208,57 +199,57 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10
   },
-  
+
 
   //styles for my productScreen
 
   containerProductInfo: {
     flex: 1,
-    marginTop:20,
+    marginTop: 20,
   },
 
   imageViewProductInfo: {
     height: 300,
     alignItems: 'center',
-    alignSelf:'center',
+    alignSelf: 'center',
     width: 300
   },
   headlineProductInfo: {
     fontWeight: 'bold',
-    marginLeft:20,  
-    marginTop:20,
-    fontSize:20
+    marginLeft: 20,
+    marginTop: 20,
+    fontSize: 20
   },
   priceProductInfo: {
-    marginLeft:20,
-    marginTop:20,
-    fontSize:18,
-    color:'green'
+    marginLeft: 20,
+    marginTop: 20,
+    fontSize: 18,
+    color: 'green'
   },
   descriptionHeaderProductInfo: {
-    marginLeft:20,
-    fontSize:14,
+    marginLeft: 20,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   descriptionProductInfo: {
     padding: 20,
-    fontSize:14,
+    fontSize: 14,
   },
   categoryProductInfo: {
-    marginLeft:20,
-    fontSize:14,
-    color:'grey'
+    marginLeft: 20,
+    fontSize: 14,
+    color: 'grey'
   },
   addToCartButton: {
-    marginTop:40,
-    backgroundColor:'white',
-    padding:10,
-    width:200,
-    textAlign:'center',
+    marginTop: 40,
+    backgroundColor: 'white',
+    padding: 10,
+    width: 200,
+    textAlign: 'center',
     alignItems: 'center',
-    alignSelf:'center',
-    color:'black',
-    borderRadius:10,
+    alignSelf: 'center',
+    color: 'black',
+    borderRadius: 10,
     borderWidth: 3,
     borderColor: 'black'
   }
